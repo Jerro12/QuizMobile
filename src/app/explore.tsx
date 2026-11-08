@@ -1,180 +1,178 @@
-import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
-import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+} from 'react-native';
 
-import { ExternalLink } from '@/components/external-link';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
-
-export default function TabTwoScreen() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const insets = {
-    ...safeAreaInsets,
-    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
-  };
-  const theme = useTheme();
-
-  const contentPlatformStyle = Platform.select({
-    android: {
-      paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    },
-    web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
-    },
-  });
-
+export default function ExploreScreen() {
   return (
-    <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
-      contentInset={insets}
-      contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Explore</ThemedText>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This starter app includes example{'\n'}code to help you get started.
-          </ThemedText>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Dokumentasi Quiz</Text>
+          <Text style={styles.subtitle}>
+            Rincian Implementasi Fitur & Rumus Perhitungan
+          </Text>
+        </View>
 
-          <ExternalLink href="https://docs.expo.dev" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Expo documentation</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{ ios: 'arrow.up.right.square', android: 'link', web: 'link' }}
-                  size={12}
-                />
-              </ThemedView>
-            </Pressable>
-          </ExternalLink>
-        </ThemedView>
+        {/* Soal 1 */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.badge}>Soal 1</Text>
+            <Text style={styles.cardTitle}>Operasi Matematika</Text>
+          </View>
+          <Text style={styles.cardDesc}>
+            Aplikasi kalkulator dengan operasi dasar matematika sesuai desain mockup:
+          </Text>
+          <View style={styles.list}>
+            <Text style={styles.listItem}>• Input: Angka 1 dan Angka 2</Text>
+            <Text style={styles.listItem}>
+              • Operator Dropdown: Penjumlahan (+), Pengurangan (-), Perkalian (*), Pembagian (/)
+            </Text>
+            <Text style={styles.listItem}>
+              • Penanganan error: Validasi input kosong dan proteksi pembagian dengan angka 0.
+            </Text>
+            <Text style={styles.listItem}>
+              • Tombol Hitung & Output label "Hasil: [nilai]".
+            </Text>
+          </View>
+        </View>
 
-        <ThemedView style={styles.sectionsWrapper}>
-          <Collapsible title="File-based routing">
-            <ThemedText type="small">
-              This app has two screens: <ThemedText type="code">src/app/index.tsx</ThemedText> and{' '}
-              <ThemedText type="code">src/app/explore.tsx</ThemedText>
-            </ThemedText>
-            <ThemedText type="small">
-              The layout file in <ThemedText type="code">src/app/_layout.tsx</ThemedText> sets up
-              the tab navigator.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/router/introduction">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+        {/* Soal 2 */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={[styles.badge, styles.badgeBlue]}>Soal 2</Text>
+            <Text style={styles.cardTitle}>Aplikasi Penggajian</Text>
+          </View>
+          <Text style={styles.cardDesc}>
+            Perhitungan gaji karyawan dengan tambahan 3 TextInput sesuai soal:
+          </Text>
+          <View style={styles.list}>
+            <Text style={styles.listItem}>• Komponen Form: ID Pegawai, Nama Karyawan, Jabatan</Text>
+            <Text style={styles.listItem}>• Penghasilan: Gaji Pokok, Tunjangan, Bonus</Text>
+            <Text style={styles.listItem}>
+              • <Text style={styles.boldText}>3 Input Tambahan:</Text> tunjangan_istri, tunjangan_anak, dan kasbon
+            </Text>
+            <Text style={styles.listItem}>
+              • <Text style={styles.boldText}>Rumus:</Text> (Gaji Pokok + Tunjangan + Bonus + Tunjangan Istri + Tunjangan Anak) - Kasbon
+            </Text>
+            <Text style={styles.listItem}>
+              • Tampilan Card "Rincian Pendapatan" dengan border aksen biru dan rincian lengkap pendapatan karyawan.
+            </Text>
+          </View>
+        </View>
 
-          <Collapsible title="Android, iOS, and web support">
-            <ThemedView type="backgroundElement" style={styles.collapsibleContent}>
-              <ThemedText type="small">
-                You can open this project on Android, iOS, and the web. To open the web version,
-                press <ThemedText type="smallBold">w</ThemedText> in the terminal running this
-                project.
-              </ThemedText>
-              <Image
-                source={require('@/assets/images/tutorial-web.png')}
-                style={styles.imageTutorial}
-              />
-            </ThemedView>
-          </Collapsible>
-
-          <Collapsible title="Images">
-            <ThemedText type="small">
-              For static images, you can use the <ThemedText type="code">@2x</ThemedText> and{' '}
-              <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
-              screen densities.
-            </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
-            <ExternalLink href="https://reactnative.dev/docs/images">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Light and dark mode components">
-            <ThemedText type="small">
-              This template has light and dark mode support. The{' '}
-              <ThemedText type="code">useColorScheme()</ThemedText> hook lets you inspect what the
-              user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Animations">
-            <ThemedText type="small">
-              This template includes an example of an animated component. The{' '}
-              <ThemedText type="code">src/components/ui/collapsible.tsx</ThemedText> component uses
-              the powerful <ThemedText type="code">react-native-reanimated</ThemedText> library to
-              animate opening this hint.
-            </ThemedText>
-          </Collapsible>
-        </ThemedView>
-        {Platform.OS === 'web' && <WebBadge />}
-      </ThemedView>
-    </ScrollView>
+        {/* Soal 3 */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={[styles.badge, styles.badgeGreen]}>Soal 3</Text>
+            <Text style={styles.cardTitle}>Aplikasi & Laporan Laundry</Text>
+          </View>
+          <Text style={styles.cardDesc}>
+            Manajemen transaksi laundry dan laporan rekapitulasi data:
+          </Text>
+          <View style={styles.list}>
+            <Text style={styles.listItem}>
+              • Data: Nomor Transaksi, Tanggal Masuk, Pelanggan, Paket Laundry (Express / Regular), Berat (Kg), Status (Lagi Proses / Selesai)
+            </Text>
+            <Text style={styles.listItem}>
+              • <Text style={styles.boldText}>Rumus Total Biaya:</Text> Berat (Kg) × Harga Paket
+            </Text>
+            <Text style={styles.listItem}>
+              • Laporan Transaksi Laundry: Ringkasan pendapatan, total berat cucian, filter status, riwayat transaksi, dan aksi ubah status.
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
+  safeArea: {
     flex: 1,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    backgroundColor: '#f8fafc',
+    paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
   container: {
-    maxWidth: MaxContentWidth,
-    flexGrow: 1,
+    padding: 16,
+    paddingBottom: 60,
   },
-  titleContainer: {
-    gap: Spacing.three,
-    alignItems: 'center',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.six,
+  header: {
+    marginBottom: 20,
   },
-  centerText: {
-    textAlign: 'center',
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#0f172a',
   },
-  pressed: {
-    opacity: 0.7,
+  subtitle: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 4,
   },
-  linkButton: {
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  cardHeader: {
     flexDirection: 'row',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.five,
-    justifyContent: 'center',
-    gap: Spacing.one,
     alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
   },
-  sectionsWrapper: {
-    gap: Spacing.five,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.three,
+  badge: {
+    backgroundColor: '#f1f5f9',
+    color: '#475569',
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 4,
   },
-  collapsibleContent: {
-    alignItems: 'center',
+  badgeBlue: {
+    backgroundColor: '#eff6ff',
+    color: '#1d4ed8',
   },
-  imageTutorial: {
-    width: '100%',
-    aspectRatio: 296 / 171,
-    borderRadius: Spacing.three,
-    marginTop: Spacing.two,
+  badgeGreen: {
+    backgroundColor: '#ecfdf5',
+    color: '#047857',
   },
-  imageReact: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1e293b',
+  },
+  cardDesc: {
+    fontSize: 13,
+    color: '#475569',
+    marginBottom: 8,
+    lineHeight: 18,
+  },
+  list: {
+    gap: 6,
+    paddingLeft: 4,
+  },
+  listItem: {
+    fontSize: 13,
+    color: '#334155',
+    lineHeight: 18,
+  },
+  boldText: {
+    fontWeight: '700',
+    color: '#0f172a',
   },
 });
